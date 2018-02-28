@@ -39,7 +39,7 @@ public class Task2 {
     }
     private static void checkMail(String text)
     {
-        String regex = "[-\\w.]+@[A-z0-9][-A-z0-9]+\\.+[A-z]{2,4}";
+        String regex = "[-\\w.]+@[A-z0-9][-A-z0-9]+\\.([A-z0-9][-A-z0-9]+\\.)*[A-z]{2,4}";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
         while (matcher.find())
