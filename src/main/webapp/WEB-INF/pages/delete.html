@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Output Data</title>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script>
+        function onClick() {
+            var inputs = document.getElementsByTagName("input");
+            var ids = [];
+            for(var i = 0; i < inputs.length; i++)
+            {
+                if (inputs[i].checked)
+                    ids.push(inputs[i].name);
+            }
+            $.ajax({
+                url: '/delete',
+                type: 'POST',
+                data: {
+                    ids: ids
+                },
+                success: function () {
+                    window.location.reload();
+                }
+            });
+            return false;
+        }
+        $(function () {
+            $('#btn').click(onClick);
+        });
+    </script>
+</head>
+<body>
+<table border="1" width="100%" cellpadding="5">
+    <tr>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Patronymic</th>
+        <th>Age</th>
+        <th>Sex</th>
+        <th>Remove</th>
+    </tr>
+</table>
+<input id = "btn" type="button" value="Apply">
+<div class="result"></div>
+</body>
+</html>

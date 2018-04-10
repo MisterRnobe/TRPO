@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Data</title>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script>
+        class Person{
+            constructor(name, surname, patronymic, age, sex)
+            {
+                this.name = name;
+                this.surname = surname;
+                this.patronymic = patronymic;
+                this.age = age;
+                this.sex = sex[0] === 'M' || sex[0] === 'm';
+            }
+        }
+        function onClick() {
+            inputs = document.getElementsByTagName("input");
+            ids = [];
+            for(i = 0; i < inputs.length; i++)
+            {
+                if (inputs[i].checked)
+                    ids.push(inputs[i].name);
+            }
+            data = {};
+            for(i = 0; i < ids.length; i++)
+            {
+                data[ids[i]] = [];
+                for(j = 0; j < 5; j++)
+                    data[ids[i]][j] = document.getElementById((ids[i]).toString()+(j+1).toString()).value;
+            }
+            console.log(data);
+            $.ajax({
+                url: '/update',
+                type: 'POST',
+                data: {
+                    'data': JSON.stringify(data)
+
+                },
+                success: function () {
+                    window.location.reload();
+                }
+            });
+        }
+        $(function () {
+            $('#btn').click(onClick);
+        });
+    </script>
+</head>
+<body>
+<table border="1" width="100%" cellpadding="5">
+    <tr>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Patronymic</th>
+        <th>Age</th>
+        <th>Sex</th>
+        <th>Update</th>
+    </tr>
+</table>
+<input type="button" id="btn" value="Apply">
+</body>
+</html>

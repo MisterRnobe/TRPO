@@ -29,17 +29,10 @@ public class Launcher {
         ProtectionDomain domain = Launcher.class.getProtectionDomain();
         URL location = domain.getCodeSource().getLocation();
 
-//        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-//        context.setContextPath("/srv");
-//        context.setResourceBase(location.toExternalForm());
-//        context.addServlet(new ServletHolder(new HelloServlet()),"/*");
-        //server.setHandler(context);
-
         WebAppContext webapp = new WebAppContext();
-        webapp.setContextPath("/app");
+        webapp.setContextPath("/*");
         webapp.setWar(location.toExternalForm());
         webapp.setDescriptor("src/main/webapp/WEB-INF/web.xml");
-        //server.setHandler(webapp);
 
         ContextHandlerCollection contexts = new ContextHandlerCollection();
         contexts.setHandlers(new Handler[] { webapp });
