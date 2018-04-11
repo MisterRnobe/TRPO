@@ -45,7 +45,7 @@ public class CurrencyObserver implements Runnable {
 
 
     private String getCurrencies() throws IOException {
-        String url = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,EUR,USD,LTC,XYU&tsyms=RUR";
+        String url = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,EUR,USD,LTC&tsyms=RUR";
 
         URL obj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
