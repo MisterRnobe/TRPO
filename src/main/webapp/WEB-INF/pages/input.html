@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>Data input</title>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script>
+        function onClick() {
+
+            $.ajax({
+                url: '/input',
+                type: 'POST',
+                data: {
+                    name: document.getElementsByName("name")[0].value,
+                    surname: document.getElementsByName("surname")[0].value,
+                    patronymic: document.getElementsByName("patronymic")[0].value,
+                    age: document.getElementsByName("age")[0].value,
+                    sex: document.getElementsByName("sex")[0].checked
+                },
+                success: function(data){
+                    $('.result').html("Accepted");
+                }
+            });
+            return false;
+        }
+
+        $(function() {
+           $('#btn').click(onClick);
+        });
+    </script>
+</head>
+<body>
+
+<form>
+    <fieldset>
+        <legend>
+            Enter data:
+        </legend>
+        <input type="text" size="20" style="margin-top: 5px" name="name"/> <small>Name</small><br />
+        <input type="text" size="20" style="margin-top: 5px" name="surname"/> <small>Surname</small><br />
+        <input type="text" size="20" style="margin-top: 5px" name="patronymic"/> <small>Patronymic</small><br />
+        <input type="text" size="20" style="margin-top: 5px" name="age"/> <small>Age</small><br />
+        <input type="radio" size="20" style="margin-top: 5px" name="sex" checked="checked"><small>Male</small>
+        <input type="radio" size="20" style="margin-top: 5px" name="sex"><small>Female</small>
+        <button id="btn" value="Hello">Send</button>
+    </fieldset>
+</form>
+<div class="result"></div>
+</body>
+</html>
