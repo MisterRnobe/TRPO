@@ -19,7 +19,6 @@ public class EventSocket extends WebSocketAdapter implements CurrencyListener {
     public void onWebSocketConnect(Session session) {
         super.onWebSocketConnect(session);
         CurrencyObserver.getInstance().addListener(this);
-        System.out.println("Connected");
     }
 
     @Override

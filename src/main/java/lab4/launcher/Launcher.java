@@ -7,9 +7,6 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-/**
- * Starts jetty-server on the specified port
- */
 public class Launcher {
 
     public static void main(String[] args) throws Exception {

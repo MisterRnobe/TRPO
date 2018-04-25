@@ -19,18 +19,7 @@ public class CurrencyObserver implements Runnable {
     private final Map<String, Double> currencies = new TreeMap<>();
     private CurrencyObserver()
     {
-        Thread t = new Thread(()->
-        {
-            while (true)
-            {
-                try{
-                    this.run();
-                    Thread.sleep(DELAY);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        Thread t = new Thread(this);
         t.start();
     }
     public void addListener(CurrencyListener l)
@@ -66,25 +55,28 @@ public class CurrencyObserver implements Runnable {
 
     @Override
     public void run() {
-        try {
-            String json = getCurrencies();
-            Map<?,?> JSONMap = JSON.parseObject(json, Map.class);
-            Map<String, Double> map =
-                    JSONMap.entrySet().stream().map(entry ->
-                    {
-                        String key = entry.getKey().toString();
-                        Double value = ((JSONObject)entry.getValue()).getDoubleValue("RUR");
-                        return new AbstractMap.SimpleEntry<>(key, value);
-                    }).filter(e-> !e.getValue().equals(currencies.get(e.getKey()))).
-                            collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            if (!map.isEmpty()) {
-                listeners.forEach(currencyListener -> currencyListener.onChangeCurrencies(map));
-                map.forEach(currencies::put);
+        while (true)
+        {
+            try {
+                String json = getCurrencies();
+                Map<?, ?> JSONMap = JSON.parseObject(json, Map.class);
+                Map<String, Double> map =
+                        JSONMap.entrySet().stream().map(entry ->
+                        {
+                            String key = entry.getKey().toString();
+                            Double value = ((JSONObject) entry.getValue()).getDoubleValue("RUR");
+                            return new AbstractMap.SimpleEntry<>(key, value);
+                        }).filter(e -> !e.getValue().equals(currencies.get(e.getKey()))).
+                                collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                if (!map.isEmpty()) {
+                    listeners.forEach(currencyListener -> currencyListener.onChangeCurrencies(map));
+                    map.forEach(currencies::put);
+                }
+
+                Thread.sleep(DELAY);
+            } catch (IOException|InterruptedException e) {
+                e.printStackTrace();
             }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

@@ -10,12 +10,8 @@
             var data = JSON.parse(event.data);
             for (val in data)
             {
-                document.getElementById(val).innerHTML = currencies[val]+": "+data[val];
+                document.getElementById(val).innerHTML = currencies[val]+": "+data[val]+" ₽";
             }
-//            for(i = 0; i < currencies.length; i++)
-//            {
-//                document.getElementById(currencies[i]).innerHTML = names[i]+": "+data[currencies[i]]+" ₽";
-//            }
         };
 
     </script>
